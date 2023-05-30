@@ -1,0 +1,6 @@
+.vscode/
+*.o
+microbe
+.idea/
+cmake*
+temp/
