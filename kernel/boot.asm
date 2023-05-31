@@ -7,10 +7,10 @@ extern _init
 ; Expose address of GDTR to C++
 global g_GDTR
 
-global register_gdt
-global register_tss
+global RegisterGDT
+global RegisterTSS
 global isr_stub_table
-global register_idt
+global RegisterIDT
 
 k_code_segment_descriptor_offset EQU 0x08
 k_data_segment_descriptor_offset EQU 0x10
@@ -49,7 +49,7 @@ unreachable:
     jmp unreachable
     hlt
 
-register_gdt:
+RegisterGDT:
     ; Load data from C++ function into the GDT register
     xor eax, eax
     mov ax, [esp + 4]            ; get size (16 bits) - which is the first parameter in C++ func
@@ -64,7 +64,6 @@ register_gdt:
     ; Load the GDT register into the CPU
     mov eax, g_GDTR
     lgdt [eax]
-
     ; Reload segments
     ; Reload CS by performing a far jump
     jmp k_code_segment_descriptor_offset:.reload_cs
@@ -78,20 +77,18 @@ register_gdt:
     mov ss, ax
     ret
 
-register_tss:
+RegisterTSS:
     xor eax, eax    ; zero out EAX for safety
     mov ax, 0x28    ; the TSS is the 6th element in the GDT => index is 5 => 5*8=0x28
     ltr ax          ; load task register for TSS
     ret
 
-register_idt:
+RegisterIDT:
     mov eax, [esp+4] ; idtr as parameter passed on the stack
     lidt [eax]
     ret
 
-
 section .data
-
 g_GDTR:
     dw 0    ; size
     dd 0    ; offset

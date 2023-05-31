@@ -129,3 +129,17 @@ void printk(const char* fmt, ...)
     g_VGA->PutString(buffer);
     va_end(v);
 }
+
+void errprintk(const char* fmt, ...)
+{
+    va_list v;
+    va_start(v, fmt);
+    const usize buffer_size = 512;
+    char buffer[buffer_size];
+    memset(buffer, 0, buffer_size);
+    vsnprintk(buffer, buffer_size, fmt, v);
+    g_VGA->SetColor(VGA::White, VGA::Red);
+    g_VGA->PutString(buffer);
+    g_VGA->SetColor(VGA::White, VGA::Black);
+    va_end(v);
+}

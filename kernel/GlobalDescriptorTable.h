@@ -5,7 +5,7 @@
 #include <kernel/Types.h>
 #include <kernel/Printk.h>
 
-extern "C" void register_gdt(u32 size, u32 offset);
+extern "C" void RegisterGDT(u32 size, u32 offset);
 
 class GlobalDescriptorTable {
 public:

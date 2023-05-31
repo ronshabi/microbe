@@ -13,7 +13,9 @@ void kmain() {
   VGA driver{};
   g_VGA = &driver;
 
-  GlobalDescriptorTable gdt{};
+  // GlobalDescriptorTable gdt{};
 
-  printk("Hello world");
+  printk("Hello world\n");
+  errprintk("Panic!!!\n");
+
 }

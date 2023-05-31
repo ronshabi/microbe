@@ -2,7 +2,6 @@
 
 GlobalDescriptorTable::GlobalDescriptorTable()
 {
-    u16 size = lgdt_size;
     u32 location = reinterpret_cast<u32>(GetGDTAddress());
     printk("GDT LOCATION = %x\n", location);
 
@@ -12,7 +11,7 @@ GlobalDescriptorTable::GlobalDescriptorTable()
 
     // asm("lgdt %0\n": : "m"(gdtr));
 
-    register_gdt(lgdt_size, location);
+    RegisterGDT(lgdt_size, location);
 }
 
 SegmentDescriptor* GlobalDescriptorTable::GetGDTAddress()
