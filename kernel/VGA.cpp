@@ -1,35 +1,34 @@
-#include "vga.h"
-
-#include <kernel/libk.h>
+#include <kernel/Libk.h>
+#include <kernel/VGA.h>
 
 VGA::VGA() noexcept { memset(m_buffer, 0, m_width * m_height); }
 
-void VGA::put_char(char c) {
+void VGA::PutChar(char c) {
   if (c == '\n') {
-    advance_newline();
+    AdvanceNewline();
   } else {
     m_buffer[m_y * m_width + m_x] = (c | 0xf << 8);
-    advance_cursor();
+    AdvanceCursor();
   }
 }
 
-void VGA::put_string(const char* s) {
+void VGA::PutString(const char* s) {
   while (*s) {
-    put_char(*s);
+    PutChar(*s);
     s++;
   }
 }
 
-void VGA::advance_newline() {
+void VGA::AdvanceNewline() {
   // FIXME: implement scrolling
   m_x = 0;
   m_y++;
 }
 
-void VGA::advance_cursor() {
+void VGA::AdvanceCursor() {
   if (m_x != m_width - 1) {
     m_x++;
   } else {
-    advance_newline();
+    AdvanceNewline();
   }
 }

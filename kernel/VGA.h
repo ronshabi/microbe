@@ -1,15 +1,15 @@
 #pragma once
 
-#include <kernel/types.h>
+#include <kernel/Types.h>
 
 class VGA {
 public:
   explicit VGA() noexcept;
-  void put_char(char c);
-  void put_string(const char* s);
+  void PutChar(char c);
+  void PutString(const char* s);
 private:
-  void advance_cursor();
-  void advance_newline();
+  void AdvanceCursor();
+  void AdvanceNewline();
 
 private:
   const u32 m_width{80};

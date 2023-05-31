@@ -12,7 +12,7 @@ ASFLAGS := -felf32
 
 SOURCES_ASM := 	boot.o
 
-SOURCES_CXX := 	main.o vga.o libk.o printk.o
+SOURCES_CXX := 	Main.o VGA.o Libk.o Printk.o ProtectedMode.o
 
 CRTBEGIN_OBJECT := $(shell $(CXX) $(CXXFLAGS) -print-file-name=crtbegin.o)
 CRTEND_OBJECT := $(shell $(CXX) $(CXXFLAGS) -print-file-name=crtend.o)

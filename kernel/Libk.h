@@ -1,6 +1,6 @@
 #pragma once
 
-#include <kernel/types.h>
+#include <kernel/Types.h>
 #include <stddef.h>
 
 #ifdef __cplusplus

@@ -1,7 +1,7 @@
-#include <kernel/libk.h>
-#include <kernel/printk.h>
-#include <kernel/types.h>
-#include <kernel/vga.h>
+#include <kernel/Libk.h>
+#include <kernel/Printk.h>
+#include <kernel/Types.h>
+#include <kernel/VGA.h>
 
 extern VGA* g_VGA;
 
@@ -11,7 +11,7 @@ enum printk_mode
     printk_mode_get_type,
 };
 
-void print_unsigned(usize base, usize number, char* buffer)
+void PrintUnsigned(usize base, usize number, char* buffer)
 {
     const char* alphanum = "0123456789abcdef";
     usize buffer_index = 0;
@@ -67,11 +67,11 @@ void vsnprintk(char* buffer, usize n, const char* fmt, va_list v)
             switch (c)
             {
             case 'x':
-                print_unsigned(16, va_arg(v, u32), tempbuf);
+                PrintUnsigned(16, va_arg(v, u32), tempbuf);
                 goto copy_number_from_buffer;
 
             case 'd':
-                print_unsigned(10, va_arg(v, u32), tempbuf);
+                PrintUnsigned(10, va_arg(v, u32), tempbuf);
                 goto copy_number_from_buffer;
 
             copy_number_from_buffer:
@@ -126,6 +126,6 @@ void printk(const char* fmt, ...)
     char buffer[buffer_size];
     memset(buffer, 0, buffer_size);
     vsnprintk(buffer, buffer_size, fmt, v);
-    g_VGA->put_string(buffer);
+    g_VGA->PutString(buffer);
     va_end(v);
 }

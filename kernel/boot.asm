@@ -4,6 +4,9 @@ global stack_top
 extern kmain
 extern _init
 
+; Expose address of GDTR to C++
+global g_GDTR
+
 global register_gdt
 global register_tss
 global isr_stub_table
@@ -33,6 +36,8 @@ stack_bottom:
 resb 16384 ; Reserve 16KiB for stack
 stack_top:
 
+; === TEXT ========================
+
 section .text
 _start:
     mov esp, stack_top
@@ -45,8 +50,19 @@ unreachable:
     hlt
 
 register_gdt:
+    ; Load data from C++ function into the GDT register
+    xor eax, eax
+    mov ax, [esp + 4]            ; get size (16 bits) - which is the first parameter in C++ func
+    mov [g_GDTR], ax                ; load size into GDTR data structure
+    
+    mov eax, [esp + 8]          ; get offset (32 bits) - which is the last parameter in C++ func
+    mov [g_GDTR + 2], eax           ; load offset into GDTR
+
+    ; Disable Interrutps
     cli
-    mov eax, [esp+4] ; gdtr as parameter passed on the stack
+    
+    ; Load the GDT register into the CPU
+    mov eax, g_GDTR
     lgdt [eax]
 
     ; Reload segments
@@ -63,14 +79,30 @@ register_gdt:
     ret
 
 register_tss:
-    mov ax, 0x28 ; the TSS is the 6th element in the GDT => index is 5 => 5*8=0x28
-    ltr ax ; load task register for TSS
+    xor eax, eax    ; zero out EAX for safety
+    mov ax, 0x28    ; the TSS is the 6th element in the GDT => index is 5 => 5*8=0x28
+    ltr ax          ; load task register for TSS
     ret
 
 register_idt:
     mov eax, [esp+4] ; idtr as parameter passed on the stack
     lidt [eax]
     ret
+
+
+section .data
+
+g_GDTR:
+    dw 0    ; size
+    dd 0    ; offset
+
+
+
+
+
+
+
+
 
 
 ; === INTERRUPTS ================================================================
