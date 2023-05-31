@@ -21,18 +21,21 @@ CXXFLAGS := -std=c++20 \
 
 ASFLAGS := -felf32
 
-SOURCES_ASM := 	boot.o
+SOURCES_ASM := 	kernel/boot.o
 
-SOURCES_CXX := 	Main.o VGA.o Libk.o Printk.o \
-				GlobalDescriptorTable.o \
-				SegmentDescriptor.o \
-				TaskSegmentDescriptor.o
+SOURCES_CXX := 	kernel/Main.o \
+				kernel/VGA.o \
+				kernel/Libk.o \
+				kernel/Printk.o \
+				kernel/GlobalDescriptorTable.o \
+				kernel/SegmentDescriptor.o \
+				kernel/TaskSegmentDescriptor.o
 
 CRTBEGIN_OBJECT := $(shell $(CXX) $(CXXFLAGS) -print-file-name=crtbegin.o)
 CRTEND_OBJECT := $(shell $(CXX) $(CXXFLAGS) -print-file-name=crtend.o)
 CRTI_OBJECT := $(BUILD_DIR)/kernel/crti.o
 CRTN_OBJECT := $(BUILD_DIR)/kernel/crtn.o
-OBJECTS := $(addprefix $(BUILD_DIR)/kernel/, $(SOURCES_CXX) $(SOURCES_ASM))
+OBJECTS := $(addprefix $(BUILD_DIR)/, $(SOURCES_CXX) $(SOURCES_ASM))
 
 # Verbose
 verbose := 0
