@@ -1,5 +1,5 @@
-#include <kernel/vga.hpp>
-#include <kernel/printk.hpp>
+#include <kernel/vga.h>
+#include <kernel/printk.h>
 
 extern "C" void kmain();
 

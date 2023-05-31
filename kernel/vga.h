@@ -1,6 +1,6 @@
 #pragma once
 
-#include <kernel/types.hpp>
+#include <kernel/types.h>
 
 class VGA {
 public:

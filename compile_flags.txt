@@ -5,3 +5,4 @@
 -Wextra
 -I.
 -m32
+-xc++

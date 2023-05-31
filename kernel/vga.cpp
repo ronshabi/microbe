@@ -1,6 +1,6 @@
-#include "vga.hpp"
+#include "vga.h"
 
-#include <kernel/libk.hpp>
+#include <kernel/libk.h>
 
 VGA::VGA() noexcept { memset(m_buffer, 0, m_width * m_height); }
 

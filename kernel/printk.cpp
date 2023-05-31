@@ -1,7 +1,7 @@
-#include <kernel/libk.hpp>
-#include <kernel/printk.hpp>
-#include <kernel/types.hpp>
-#include <kernel/vga.hpp>
+#include <kernel/libk.h>
+#include <kernel/printk.h>
+#include <kernel/types.h>
+#include <kernel/vga.h>
 
 extern VGA* g_VGA;
 
