@@ -46,8 +46,8 @@ void* memset(void* s, int c, size_t n) {
 
 char* strrev(char* s) {
   usize len = strlen(s);
-
   for (usize i = 0; i < len / 2; i++) {
+
     // swap
     char temp = s[i];
     s[i] = s[len - i - 1];

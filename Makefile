@@ -10,19 +10,14 @@ DIRS := $(BUILD_DIR) $(BUILD_DIR)/kernel
 CXXFLAGS := -std=c++20 -nostdlib -O2 -Wall -Wextra -I. -ffreestanding -fno-rtti -fno-exceptions
 ASFLAGS := -felf32
 
-SOURCES_ASM := 	boot.o \
-			   	x86.o
+SOURCES_ASM := 	boot.o
 
-SOURCES_CXX := 	main.o \
-				vga.o \
-				libk.o
+SOURCES_CXX := 	main.o vga.o libk.o printk.o
 
 CRTBEGIN_OBJECT := $(shell $(CXX) $(CXXFLAGS) -print-file-name=crtbegin.o)
 CRTEND_OBJECT := $(shell $(CXX) $(CXXFLAGS) -print-file-name=crtend.o)
-
 CRTI_OBJECT := $(BUILD_DIR)/kernel/crti.o
 CRTN_OBJECT := $(BUILD_DIR)/kernel/crtn.o
-
 OBJECTS := $(addprefix $(BUILD_DIR)/kernel/, $(SOURCES_CXX) $(SOURCES_ASM))
 
 # Verbose
@@ -39,7 +34,7 @@ $(shell mkdir -p $(DIRS))
 ECHO := $(Q) echo -e
 RM := rm -rf
 
-.PHONY: all run clean
+.PHONY: all run clean nm objdump
 
 all: $(BINARY)
 
@@ -61,6 +56,12 @@ build/kernel/%.o: kernel/%.cpp
 build/kernel/%.o: kernel/%.asm
 	$(ECHO) "\tASM\t$^"
 	$(Q) $(AS) $(ASFLAGS) $^ -o $@
+
+nm:
+	nm -WC $(BINARY)
+
+objdump:
+	objdump -Mintel -EL -T -t -w -C -D $(BINARY) | less
 
 clean:
 	$(RM) $(BUILD_DIR)/

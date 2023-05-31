@@ -1,16 +1,14 @@
 #include <kernel/vga.hpp>
-
-static_assert(sizeof(int) == 4, "int => 4");
-static_assert(sizeof(long) == 4, "int => 4");
+#include <kernel/printk.hpp>
 
 extern "C" void kmain();
 
-VGA* v;
+VGA* g_VGA;
 
 void kmain() {
-  VGA driver;
-  v = &driver;
+  VGA driver{};
+  g_VGA = &driver;
 
-  v->put_string("Hello guys\n");
-  v->put_string("Hows it going bros\n");
+  printk("Hello guys %x\n", 0x42069);
+  printk("Hows it going bros\n");
 }
