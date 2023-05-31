@@ -7,12 +7,26 @@ BUILD_DIR := build
 BINARY := $(BUILD_DIR)/microbe
 DIRS := $(BUILD_DIR) $(BUILD_DIR)/kernel
 
-CXXFLAGS := -std=c++20 -nostdlib -O2 -Wall -Wextra -I. -ffreestanding -fno-rtti -fno-exceptions
+CXXFLAGS := -std=c++20 \
+			-nostdlib \
+			-O2 \
+			-Wall \
+			-Wextra \
+			-I. \
+			-ffreestanding \
+			-fno-rtti \
+			-fno-exceptions \
+			-fno-use-cxa-atexit \
+			-fno-leading-underscore
+
 ASFLAGS := -felf32
 
 SOURCES_ASM := 	boot.o
 
-SOURCES_CXX := 	Main.o VGA.o Libk.o Printk.o ProtectedMode.o
+SOURCES_CXX := 	Main.o VGA.o Libk.o Printk.o \
+				GlobalDescriptorTable.o \
+				SegmentDescriptor.o \
+				TaskSegmentDescriptor.o
 
 CRTBEGIN_OBJECT := $(shell $(CXX) $(CXXFLAGS) -print-file-name=crtbegin.o)
 CRTEND_OBJECT := $(shell $(CXX) $(CXXFLAGS) -print-file-name=crtend.o)
