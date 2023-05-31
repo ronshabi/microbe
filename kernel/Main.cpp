@@ -1,7 +1,6 @@
 #include "kernel/GlobalDescriptorTable.h"
 #include <kernel/VGA.h>
 #include <kernel/Printk.h>
-#include <kernel/ProtectedMode.h>
 #include <kernel/Libk.h>
 
 extern "C" void kmain();
@@ -13,9 +12,8 @@ void kmain() {
   VGA driver{};
   g_VGA = &driver;
 
-  // GlobalDescriptorTable gdt{};
+  GlobalDescriptorTable gdt{};
 
   printk("Hello world\n");
   errprintk("Panic!!!\n");
-
 }
