@@ -1,18 +1,22 @@
-#include "kernel/GlobalDescriptorTable.h"
-#include <kernel/VGA.h>
-#include <kernel/Printk.h>
 #include <kernel/Libk.h>
+#include <kernel/Printk.h>
 
-extern "C" void kmain();
+#include <kernel/VGA.h>
+
+#include <kernel/GlobalDescriptorTable.h>
+#include <kernel/InterruptDescriptorTable.h>
+
+
 extern "C" u32 g_GDTR;
 
 VGA* g_VGA;
 
-void kmain() {
+extern "C" void kmain() {
+  GlobalDescriptorTable gdt{};
+  InterruptDescriptorTable idt{};
   VGA driver{};
   g_VGA = &driver;
 
-  GlobalDescriptorTable gdt{};
 
   printk("Hello world\n");
   errprintk("Panic!!!\n");

@@ -29,7 +29,9 @@ SOURCES_CXX := 	kernel/Main.o \
 				kernel/Printk.o \
 				kernel/GlobalDescriptorTable.o \
 				kernel/SegmentDescriptor.o \
-				kernel/TaskSegmentDescriptor.o
+				kernel/TaskSegmentDescriptor.o \
+				kernel/InterruptDescriptorTable.o \
+				kernel/InterruptDescriptorTableEntry.o
 
 CRTBEGIN_OBJECT := $(shell $(CXX) $(CXXFLAGS) -print-file-name=crtbegin.o)
 CRTEND_OBJECT := $(shell $(CXX) $(CXXFLAGS) -print-file-name=crtend.o)

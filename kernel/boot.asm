@@ -4,16 +4,13 @@ global stack_top
 extern kmain
 extern _init
 
-; Expose address of GDTR to C++
 global g_GDTR
+global g_IDTR
 
 global RegisterGDT
 global RegisterTSS
 global isr_stub_table
 global RegisterIDT
-
-k_code_segment_descriptor_offset EQU 0x08
-k_data_segment_descriptor_offset EQU 0x10
 
 MB_ALIGN        equ 1<<0
 MB_MEMINFO      equ 1<<1
@@ -64,12 +61,13 @@ RegisterGDT:
     ; Load the GDT register into the CPU
     mov eax, g_GDTR
     lgdt [eax]
-    ; Reload segments
-    ; Reload CS by performing a far jump
-    jmp k_code_segment_descriptor_offset:.reload_cs
+    ret
+
+ReloadSegments:
+    jmp 0x08:.reload_cs
 
 .reload_cs:
-    mov ax, k_data_segment_descriptor_offset
+    mov ax, 0x10
     mov ds, ax
     mov es, ax
     mov fs, ax
@@ -83,9 +81,19 @@ RegisterTSS:
     ltr ax          ; load task register for TSS
     ret
 
+;
+; IDT
+;
 RegisterIDT:
-    mov eax, [esp+4] ; idtr as parameter passed on the stack
-    lidt [eax]
+    xor eax, eax
+    mov ax, [esp + 4]       ; First paramter - size as u32 in C++ to 16 bit in asm
+    mov [g_IDTR], ax        ; Load size into data structure
+    
+    mov eax, [esp + 8]      ; Second paramter - offset as u32
+    mov [g_IDTR+2], eax     ; Load Offset into data structure
+
+    mov eax, g_IDTR         ; Load the data structure locaiton to EAX 
+    lidt [eax]              ; Register IDT
     ret
 
 section .data
@@ -93,10 +101,9 @@ g_GDTR:
     dw 0    ; size
     dd 0    ; offset
 
-
-
-
-
+g_IDTR:
+    dw 0    ; size
+    dd 0    ; offset
 
 
 
