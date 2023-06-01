@@ -27,12 +27,14 @@ SOURCES_CXX := 	kernel/Main.o \
 				kernel/VGA.o \
 				kernel/Libk.o \
 				kernel/Printk.o \
+				kernel/Common.o \
 				kernel/GlobalDescriptorTable.o \
 				kernel/SegmentDescriptor.o \
 				kernel/TaskSegmentDescriptor.o \
 				kernel/InterruptDescriptorTable.o \
-				kernel/InterruptDescriptorTableEntry.o
-
+				kernel/InterruptDescriptorTableEntry.o \
+				kernel/I8259.o \
+				
 CRTBEGIN_OBJECT := $(shell $(CXX) $(CXXFLAGS) -print-file-name=crtbegin.o)
 CRTEND_OBJECT := $(shell $(CXX) $(CXXFLAGS) -print-file-name=crtend.o)
 CRTI_OBJECT := $(BUILD_DIR)/kernel/crti.o

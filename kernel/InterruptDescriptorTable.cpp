@@ -14,7 +14,7 @@ InterruptDescriptorTable::InterruptDescriptorTable()
     RegisterIDT(size, reinterpret_cast<u32>(m_table));
 }
 
-void InterruptDescriptorTable::SetDescriptor(u32 index, void* isr, u8 flags)
+void InterruptDescriptorTable::SetDescriptor(u32 index, u32* isr, u8 flags)
 {
     m_table[index].SetFlags(flags);
     m_table[index].SetISR(isr);

@@ -1,5 +1,7 @@
 #include <kernel/Libk.h>
 #include <kernel/Printk.h>
+#include <kernel/Common.h>
+#include <kernel/I8259.h>
 
 #include <kernel/VGA.h>
 
@@ -14,10 +16,12 @@ VGA* g_VGA;
 extern "C" void kmain() {
   GlobalDescriptorTable gdt{};
   InterruptDescriptorTable idt{};
+  I8259::Init();
   VGA driver{};
   g_VGA = &driver;
 
 
-  printk("Hello world\n");
+
+  printk("Are Interrupts enabled? %d\n", CPU::AreInterruptsEnabled());
   errprintk("Panic!!!\n");
 }
