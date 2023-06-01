@@ -16,7 +16,7 @@ VGA* g_VGA;
 extern "C" void kmain() {
   GlobalDescriptorTable gdt{};
   InterruptDescriptorTable idt{};
-  I8259::Init();
+  I8259 i8259{};
   VGA driver{};
   g_VGA = &driver;
 
