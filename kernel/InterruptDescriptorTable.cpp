@@ -1,5 +1,4 @@
 #include "InterruptDescriptorTable.h"
-#include "kernel/InterruptDescriptorTableEntry.h"
 
 InterruptDescriptorTable::InterruptDescriptorTable()
 {
@@ -24,7 +23,7 @@ void InterruptDescriptorTable::SetDescriptor(u32 index, u32* isr, u8 flags)
 
 void ExceptionHandler()
 {
-    errprintk("Exception Handler called\n");
+    printk("Exception Handler called\n");
     asm volatile ("cli; hlt");
 }
 

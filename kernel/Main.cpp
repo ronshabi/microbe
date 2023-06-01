@@ -17,11 +17,14 @@ extern "C" void kmain() {
   GlobalDescriptorTable gdt{};
   InterruptDescriptorTable idt{};
   I8259 i8259{};
+  i8259.UnsetMask(0);
+
+
   VGA driver{};
   g_VGA = &driver;
 
 
-
   printk("Are Interrupts enabled? %d\n", CPU::AreInterruptsEnabled());
   errprintk("Panic!!!\n");
+
 }

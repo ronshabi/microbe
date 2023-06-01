@@ -8,7 +8,10 @@ class PIC
 public:
     PIC(u8 command_port, u8 data_port, u8 remap_to);
 
-    u8 GetState();
+    u8 GetCommandPort();
+    u8 GetDataPort();
+    void SetMask(u8 irq);
+    void UnsetMask(u8 irq);
     void SendCommand(u8 command);
     void SendData(u8 data);
     void Remap();
@@ -25,8 +28,11 @@ private:
 class I8259 {
 public:
     I8259();
+    void SetMask(u8 irq);
+    void UnsetMask(u8 irq);
     void SendEOI(u8 irq);
 private:
+    void Init();
     PIC m_PIC1;
     PIC m_PIC2;
 };

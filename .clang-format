@@ -2,3 +2,4 @@ BasedOnStyle: WebKit
 PointerAlignment: Left
 IndentWidth: 4
 ColumnLimit: 100
+AllowShortFunctionsOnASingleLine: InlineOnly
